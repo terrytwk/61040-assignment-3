@@ -5,7 +5,7 @@
   "main": "dist/dayplanner-tests.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/dayplanner-tests.js",
+    "start": "npm run build && node dist/customerordering-tests.js",
     "dev": "ts-node --transpile-only dayplanner-tests.ts",
     "test": "npm run build && node dist/dayplanner-tests.js",
     "manual": "npm run build && node -e \"require('./dist/dayplanner-tests.js').testManualScheduling()\"",
