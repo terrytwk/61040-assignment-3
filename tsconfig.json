@@ -20,9 +20,9 @@
     "*.ts"
   ],
   "files": [
-    "dayplanner.ts",
+    "customerorder.ts",
     "gemini-llm.ts",
-    "dayplanner-tests.ts"
+    "customerordering-tests.ts"
   ],
   "exclude": [
     "node_modules",

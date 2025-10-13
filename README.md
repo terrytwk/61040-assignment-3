@@ -96,22 +96,22 @@ npm start
 
 **Run specific test cases:**
 ```bash
-npm run manual    # Manual scheduling only
-npm run llm       # LLM-assisted scheduling only
-npm run mixed     # Mixed manual + LLM scheduling
+npm run manual    # Manual ordering only
+npm run llm       # LLM-assisted voice ordering only
+npm run mixed     # Mixed manual + LLM ordering
 ```
 
 ## File Structure
 
 ```
-dayplanner/
+customerordering/
 ├── package.json              # Dependencies and scripts
 ├── tsconfig.json             # TypeScript configuration
 ├── config.json               # Your Gemini API key
-├── dayplanner-types.ts       # Core type definitions
-├── dayplanner.ts             # DayPlanner class implementation
-├── dayplanner-llm.ts         # LLM integration
-├── dayplanner-tests.ts       # Test cases and examples
+├── customerorder.ts           # CustomerOrdering class implementation
+├── gemini-llm.ts             # LLM integration
+├── customerordering-tests.ts  # Test cases and examples
+├── customerordering.spec     # Concept specification
 ├── dist/                     # Compiled JavaScript output
 └── README.md                 # This file
 ```
@@ -120,63 +120,75 @@ dayplanner/
 
 The application includes three comprehensive test cases:
 
-### 1. Manual Scheduling
-Demonstrates adding activities and manually assigning them to time slots:
+### 1. Basic Voice Ordering
+Demonstrates simple voice order processing and order management:
 
 ```typescript
-const planner = new DayPlanner();
-const breakfast = planner.addActivity('Breakfast', 1); // 30 minutes
-planner.assignActivity(breakfast, 14); // 7:00 AM
+const ordering = new CustomerOrdering();
+ordering.addDrink('Coffee', 'Freshly brewed coffee', { 
+    sizes: ['small', 'medium', 'large'], 
+    milk: ['whole', 'skim', 'oat', 'almond'] 
+});
+const order = await ordering.placeVoiceOrder("I'd like a large coffee with oat milk", llm);
+ordering.markServed(order);
 ```
 
-### 2. LLM-Assisted Scheduling
-Shows AI-powered scheduling with hardwired preferences:
+### 2. Complex Customization Order
+Shows AI-powered processing of complex orders with multiple customizations:
 
 ```typescript
-const planner = new DayPlanner();
-planner.addActivity('Morning Jog', 2);
-planner.addActivity('Math Homework', 4);
-await llm.requestAssignmentsFromLLM(planner);
+const ordering = new CustomerOrdering();
+ordering.addDrink('Caramel Macchiato', 'Espresso with vanilla syrup', {
+    sizes: ['tall', 'grande', 'venti'],
+    milk: ['whole', 'skim', 'oat', 'almond'],
+    shots: ['single', 'double', 'triple'],
+    temperature: ['hot', 'iced']
+});
+const order = await ordering.placeVoiceOrder("Give me a venti caramel macchiato, hot, with almond milk and a double shot", llm);
 ```
 
-### 3. Mixed Scheduling
-Combines manual assignments with AI assistance for remaining activities.
+### 3. Order Management Workflow
+Combines multiple orders with order lifecycle management and cancellations.
 
 ## Sample Output
 
 ```
-📅 Daily Schedule
+☕ Available Drinks
 ==================
-7:00 AM - Breakfast (30 min)
-8:00 AM - Morning Workout (1 hours)
-10:00 AM - Study Session (1.5 hours)
-1:00 PM - Lunch (30 min)
-3:00 PM - Team Meeting (1 hours)
-7:00 PM - Dinner (30 min)
-9:00 PM - Evening Reading (1 hours)
+- Coffee - Freshly brewed coffee
+- Latte - Espresso with steamed milk
+- Cappuccino - Espresso with foamed milk
 
-📋 Unassigned Activities
-========================
-All activities are assigned!
+📋 Current Orders
+==================
+🟡 PLACED ORDERS:
+  2:30:15 PM - Coffee (size: large, milk: oat) [PLACED]
+
+🟢 SERVED ORDERS:
+  2:25:10 PM - Latte (size: medium, milk: almond) [SERVED]
+
+🔴 CANCELED ORDERS:
+  2:20:05 PM - Cappuccino (size: small, milk: whole) [CANCELED]
 ```
 
 ## Key Features
 
-- **Simple State Management**: Activities and assignments stored in memory
-- **Flexible Time System**: Half-hour slots from midnight (0-47)
-- **Query-Based Display**: Schedule generated on-demand, not stored sorted
-- **AI Integration**: Hardwired preferences in LLM prompt (no external hints)
-- **Conflict Detection**: Prevents overlapping activities
-- **Clean Architecture**: First principles implementation with no legacy code
+- **Simple State Management**: Drinks and orders stored in memory
+- **Flexible Customization System**: Support for various drink options and customizations
+- **Query-Based Display**: Orders and menu generated on-demand, not stored sorted
+- **AI Integration**: Natural language processing for voice ordering with validation
+- **Order Lifecycle Management**: Track orders from PLACED to SERVED or CANCELED
+- **Clean Architecture**: First principles implementation with comprehensive validation
 
-## LLM Preferences (Hardwired)
+## LLM Validation Rules (Hardwired)
 
-The AI uses these built-in preferences:
-- Exercise activities: Morning (6:00 AM - 10:00 AM)
-- Study/Classes: Focused hours (9:00 AM - 5:00 PM)
-- Meals: Regular intervals (breakfast 7-9 AM, lunch 12-1 PM, dinner 6-8 PM)
-- Social/Relaxation: Evenings (6:00 PM - 10:00 PM)
-- Avoid: Demanding activities after 10:00 PM
+The AI uses these built-in validation rules:
+- Temperature: Only "hot" or "iced" - no variations like "extra hot" or "cold"
+- Milk: Only "whole", "skim", "almond", or "oat" - no "soy milk" or "coconut milk"
+- Shots: Only "single", "double", or "triple" - no "extra shot" or "additional shot"
+- Sizes: Must match available options for each drink (small/medium/large OR tall/grande/venti)
+- Drink Names: Must exactly match drinks in the menu - no hallucination of new drinks
+- Customization Conflicts: Prevents impossible combinations like "iced" and "hot" together
 
 ## Troubleshooting
 
@@ -192,16 +204,6 @@ The AI uses these built-in preferences:
 ### Build Issues
 - Use `npm run build` to compile TypeScript
 - Check that all dependencies are installed with `npm install`
-
-## Next Steps
-
-Try extending the DayPlanner:
-- Add weekly scheduling
-- Implement activity categories
-- Add location information
-- Create a web interface
-- Add conflict resolution strategies
-- Implement recurring activities
 
 ## Resources
 

@@ -1,18 +1,25 @@
 {
-  "name": "gemini-schedule-demo",
+  "name": "60140-assignment-3",
   "version": "1.0.0",
-  "description": "A demo application showing how to use Google's Gemini API to create student schedules",
-  "main": "dist/dayplanner-tests.js",
+  "description": "A demo application showing how to use Google's Gemini API to take customer orders",
+  "main": "dist/customerordering-tests.js",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/customerordering-tests.js",
-    "dev": "ts-node --transpile-only dayplanner-tests.ts",
-    "test": "npm run build && node dist/dayplanner-tests.js",
-    "manual": "npm run build && node -e \"require('./dist/dayplanner-tests.js').testManualScheduling()\"",
-    "llm": "npm run build && node -e \"require('./dist/dayplanner-tests.js').testLLMScheduling()\"",
-    "mixed": "npm run build && node -e \"require('./dist/dayplanner-tests.js').testMixedScheduling()\""
+    "dev": "ts-node --transpile-only customerordering-tests.ts",
+    "test": "npm run build && node dist/customerordering-tests.js",
+    "manual": "npm run build && node -e \"require('./dist/customerordering-tests.js').testManualScheduling()\"",
+    "llm": "npm run build && node -e \"require('./dist/customerordering-tests.js').testLLMScheduling()\"",
+    "mixed": "npm run build && node -e \"require('./dist/customerordering-tests.js').testMixedScheduling()\""
   },
-  "keywords": ["gemini", "ai", "schedule", "student", "demo", "typescript"],
+  "keywords": [
+    "gemini",
+    "ai",
+    "customer ordering",
+    "student",
+    "demo",
+    "typescript"
+  ],
   "author": "Student Demo",
   "license": "MIT",
   "dependencies": {
