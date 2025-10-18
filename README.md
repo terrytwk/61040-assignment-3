@@ -21,7 +21,7 @@ A simple customer ordering system. This implementation focuses on the core conce
 
 The system includes AI-powered natural language processing to convert spoken or typed orders into structured order objects. The `placeVoiceOrder` action uses AI to parse customer requests like "I'd like a large coffee with extra shot and oat milk" and automatically matches it to available drinks and options, creating a proper order object with all the necessary details.
 
-![Voice Ordering Interface](../assets/sketch/voice-ordering.png)
+![Voice Ordering Interface](/assets/sketch/voice-ordering.png)
 
 ### User Journey
 When a customer approaches the counter, the cashier activates voice mode instead of navigating through multiple menu screens. As the customer speaks their order naturally—"I'll have a grande caramel macchiato with almond milk and an extra shot"—the system listens and processes the request in real-time. The cashier repeats the order back to confirm accuracy, and the POS system automatically detects and parses the order details, populating the order screen with the correct drink, size, and customizations. The cashier can then quickly review the generated order, make any necessary adjustments to quantities or special instructions, and proceed directly to payment processing. This streamlined workflow eliminates the need for manual menu navigation and reduces order-taking time while maintaining accuracy through AI-powered natural language understanding.
